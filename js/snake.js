@@ -64,7 +64,7 @@ class SnakeGame {
         vy: (Math.random() - 0.5) * 4,
         life: 1,
         decay: 0.03 + Math.random() * 0.03,
-        color: `hsl(${Math.random() * 60 + 260}, 80%, 65%)`
+        color: 'hsl(' + (Math.random() * 60 + 260) + ', 80%, 65%)'
       });
     }
   }
@@ -88,40 +88,60 @@ class SnakeGame {
 
       switch (e.key) {
         case 'ArrowUp': case 'w': case 'W':
-          if (this.snake.dy === 0) { this.snake.dx = 0; this.snake.dy = -this.gridSize; }
+          if (this.snake.dy === 0) {
+            this.snake.dx = 0;
+            this.snake.dy = -this.gridSize;
+          }
           break;
         case 'ArrowDown': case 's': case 'S':
-          if (this.snake.dy === 0) { this.snake.dx = 0; this.snake.dy = this.gridSize; }
+          if (this.snake.dy === 0) {
+            this.snake.dx = 0;
+            this.snake.dy = this.gridSize;
+          }
           break;
         case 'ArrowLeft': case 'a': case 'A':
-          if (this.snake.dx === 0) { this.snake.dx = -this.gridSize; this.snake.dy = 0; }
+          if (this.snake.dx === 0) {
+            this.snake.dx = -this.gridSize;
+            this.snake.dy = 0;
+          }
           break;
         case 'ArrowRight': case 'd': case 'D':
-          if (this.snake.dx === 0) { this.snake.dx = this.gridSize; this.snake.dy = 0; }
+          if (this.snake.dx === 0) {
+            this.snake.dx = this.gridSize;
+            this.snake.dy = 0;
+          }
           break;
       }
     };
     document.addEventListener('keydown', this._keydown);
 
     this._touchstart = (e) => {
-      const t = e.changedTouches[0];
-      this._tx = t.pageX;
-      this._ty = t.pageY;
+      this._tx = e.changedTouches[0].pageX;
+      this._ty = e.changedTouches[0].pageY;
       e.preventDefault();
     };
     this._touchmove = (e) => e.preventDefault();
     this._touchend = (e) => {
       if (!this.running) { this.initGame(); return; }
       if (this.paused) { this.paused = false; return; }
-      const t = e.changedTouches[0];
-      const dx = t.pageX - this._tx;
-      const dy = t.pageY - this._ty;
+      const dx = e.changedTouches[0].pageX - this._tx;
+      const dy = e.changedTouches[0].pageY - this._ty;
       if (Math.abs(dx) > Math.abs(dy)) {
-        if (dx > 0 && this.snake.dx === 0) { this.snake.dx = this.gridSize; this.snake.dy = 0; }
-        else if (dx < 0 && this.snake.dx === 0) { this.snake.dx = -this.gridSize; this.snake.dy = 0; }
+        if (dx > 0 && this.snake.dx === 0) {
+          this.snake.dx = this.gridSize;
+          this.snake.dy = 0;
+        } else if (dx < 0 && this.snake.dx === 0) {
+          this.snake.dx = -this.gridSize;
+          this.snake.dy = 0;
+        }
       } else {
-        if (dy > 0 && this.snake.dy === 0) { this.snake.dy = this.gridSize; this.snake.dx = 0; }
-        else if (dy < 0 && this.snake.dy === 0) { this.snake.dy = -this.gridSize; this.snake.dx = 0; }
+        if (dy > 0 && this.snake.dy === 0) {
+          this.snake.dy = this.gridSize;
+          this.snake.dx = 0;
+        } else if (dy < 0 && this.snake.dy === 0) {
+          this.snake.dy = -this.gridSize;
+          this.snake.dx = 0;
+        }
       }
       e.preventDefault();
     };
@@ -157,7 +177,22 @@ class SnakeGame {
     ctx.fillStyle = '#0a0a0f';
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.drawGrid(ctx);
+    ctx.globalAlpha = 0.03;
+    ctx.strokeStyle = '#6c5ce7';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x <= this.canvas.width; x += this.gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, this.canvas.height);
+      ctx.stroke();
+    }
+    for (let y = 0; y <= this.canvas.height; y += this.gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(this.canvas.width, y);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
 
     ctx.shadowBlur = 10;
     ctx.shadowColor = '#ff5252';
@@ -184,37 +219,26 @@ class SnakeGame {
       const sat = 80 - t * 30;
       const light = 55 + t * 30;
       ctx.shadowBlur = 8;
-      ctx.shadowColor = `hsla(${hue}, ${sat}%, ${light}%, 0.6)`;
-      ctx.fillStyle = `hsl(${hue}, ${sat}%, ${light}%)`;
+      ctx.shadowColor = 'hsla(' + hue + ', ' + sat + '%, ' + light + '%, 0.6)';
+      ctx.fillStyle = 'hsl(' + hue + ', ' + sat + '%, ' + light + '%)';
       const pad = i === 0 ? 1 : 2;
       ctx.fillRect(cell.x + pad, cell.y + pad, this.gridSize - pad * 2, this.gridSize - pad * 2);
     });
     ctx.shadowBlur = 0;
 
-    this.particles = this.particles.filter(p => {
+    this.particles = this.particles.filter((p) => {
       p.x += p.vx;
       p.y += p.vy;
       p.life -= p.decay;
       if (p.life <= 0) return false;
-      ctx.fillStyle = p.color.replace(')', `, ${p.life})`).replace('hsl', 'hsla');
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
       ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
       return true;
     });
+    ctx.globalAlpha = 1;
 
     this.drawHud(ctx);
-  }
-
-  drawGrid(ctx) {
-    ctx.globalAlpha = 0.03;
-    ctx.strokeStyle = '#6c5ce7';
-    ctx.lineWidth = 0.5;
-    for (let x = 0; x <= this.canvas.width; x += this.gridSize) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, this.canvas.height); ctx.stroke();
-    }
-    for (let y = 0; y <= this.canvas.height; y += this.gridSize) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(this.canvas.width, y); ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
   }
 
   drawHud(ctx) {
@@ -226,11 +250,11 @@ class SnakeGame {
 
     ctx.fillStyle = '#6c5ce7';
     ctx.textAlign = 'left';
-    ctx.fillText(`Score: ${this.score}`, 12, 16);
+    ctx.fillText('Score: ' + this.score, 12, 16);
 
     ctx.fillStyle = '#a29bfe';
     ctx.textAlign = 'center';
-    ctx.fillText(`Best: ${this.highScore}`, this.canvas.width / 2, 16);
+    ctx.fillText('Best: ' + this.highScore, this.canvas.width / 2, 16);
 
     ctx.fillStyle = '#8888a0';
     ctx.textAlign = 'right';
@@ -266,10 +290,10 @@ class SnakeGame {
 
     ctx.fillStyle = '#e4e4ed';
     ctx.font = '20px "JetBrains Mono", monospace';
-    ctx.fillText(`Score: ${this.score}`, this.canvas.width / 2, this.canvas.height / 2 + 10);
+    ctx.fillText('Score: ' + this.score, this.canvas.width / 2, this.canvas.height / 2 + 10);
 
     ctx.fillStyle = '#a29bfe';
-    ctx.fillText(`Best: ${this.highScore}`, this.canvas.width / 2, this.canvas.height / 2 + 40);
+    ctx.fillText('Best: ' + this.highScore, this.canvas.width / 2, this.canvas.height / 2 + 40);
 
     ctx.fillStyle = '#8888a0';
     ctx.font = '14px "Inter", sans-serif';
