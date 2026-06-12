@@ -164,11 +164,10 @@ class SnakeGame {
     s.x += s.dx;
     s.y += s.dy;
 
-    if (s.x < 0) this.die();
-    else if (s.x >= this.canvas.width) this.die();
-    if (s.y < 0) this.die();
-    else if (s.y >= this.canvas.height) this.die();
-    if (!this.running) return;
+    if (s.x < 0) s.x = this.canvas.width - this.gridSize;
+    else if (s.x >= this.canvas.width) s.x = 0;
+    if (s.y < 0) s.y = this.canvas.height - this.gridSize;
+    else if (s.y >= this.canvas.height) s.y = 0;
 
     s.cells.unshift({ x: s.x, y: s.y });
     if (s.cells.length > s.maxCells) s.cells.pop();
