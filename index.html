@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Guido Di Lauro — DevOps Engineer. Personal website." />
-  <title>Guido Di Lauro</title>
+  <title id="pageTitle">Guido Di Lauro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -18,9 +18,10 @@
 
   <nav class="nav">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">GDL</a>
+
       <div class="nav-links">
         <a href="#about">About</a>
+        <a href="#experience">Experience</a>
         <a href="#interests">Interests</a>
         <a href="#contact">Contact</a>
       </div>
@@ -33,36 +34,32 @@
 
   <section id="hero" class="hero">
     <div class="hero-content">
-      <p class="hero-greeting">Hi, I'm</p>
-      <h1 class="hero-name">
-        <span class="hero-name-line">Guido</span>
-        <span class="hero-name-line">Di Lauro</span>
-      </h1>
-      <p class="hero-role">DevOps Engineer</p>
-      <p class="hero-tagline">
-        I build resilient infrastructure, automate everything in sight,<br />
-        and keep systems running while I sleep.
-      </p>
-      <div class="hero-actions">
-        <a href="#about" class="btn btn-primary">About me</a>
-        <a href="#contact" class="btn btn-outline">Get in touch</a>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-terminal">
-        <div class="terminal-bar">
-          <span class="terminal-dot dot-red"></span>
-          <span class="terminal-dot dot-yellow"></span>
-          <span class="terminal-dot dot-green"></span>
-          <span class="terminal-title">guido@infra ~</span>
+      <div class="hero-text">
+        <p class="hero-greeting" data-bind="hero.greeting">Hi, I'm</p>
+        <h1 class="hero-name">
+          <span class="hero-name-line" data-bind="personal.firstName">Guido</span>
+          <span class="hero-name-line" data-bind="personal.lastName">Di Lauro</span>
+        </h1>
+        <p class="hero-role" data-bind="personal.role">DevOps Engineer</p>
+        <p class="hero-tagline" data-bind="personal.tagline">
+          I build resilient infrastructure, automate everything in sight,<br />
+          and keep systems running while I sleep.
+        </p>
+        <div class="hero-actions">
+          <a href="#about" class="btn btn-primary">About me</a>
+          <a href="#contact" class="btn btn-outline">Get in touch</a>
         </div>
-        <div class="terminal-body">
-          <p><span class="prompt">❯</span> whoami</p>
-          <p class="terminal-output">devops engineer</p>
-          <p><span class="prompt">❯</span> uptime</p>
-          <p class="terminal-output">always online</p>
-          <p><span class="prompt">❯</span> cat /etc/motd</p>
-          <p class="terminal-output">Let's build something reliable<span class="cursor">█</span></p>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dot dot-red"></span>
+            <span class="terminal-dot dot-yellow"></span>
+            <span class="terminal-dot dot-green"></span>
+            <span class="terminal-title" data-bind-template="terminalTitle"></span>
+          </div>
+          <div class="terminal-body" data-bind-template="terminalBody">
+          </div>
         </div>
       </div>
     </div>
@@ -80,52 +77,44 @@
       </h2>
       <div class="about-grid">
         <div class="about-text">
-          <p>
-            I'm a <strong>DevOps Engineer</strong> passionate about bridging the gap between development and operations.
-            My world revolves around <span class="highlight">cloud infrastructure</span>, <span class="highlight">CI/CD pipelines</span>,
-            and making deployments boring (the good kind).
-          </p>
-          <p>
-            I believe infrastructure should be <strong>declarative, reproducible, and invisible</strong> — it should
-            just work. I spend my days wrangling Kubernetes clusters, designing resilient architectures,
-            and automating away the tedious stuff so teams can focus on shipping value.
-          </p>
-          <p>
-            When I'm not in a terminal, you'll find me experimenting with new tech, contributing to
-            open source, exploring the outdoors, or hunting down the perfect espresso.
-          </p>
-          <div class="about-stats">
-            <div class="stat">
-              <span class="stat-number">10+</span>
-              <span class="stat-label">Years in Tech</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">∞</span>
-              <span class="stat-label">Automation</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">24/7</span>
-              <span class="stat-label">Reliability</span>
-            </div>
+          <div data-bind-template="aboutBio"></div>
+          <div class="about-stats" data-bind-template="aboutStats">
           </div>
         </div>
         <div class="about-card">
           <div class="tech-stack">
             <h3>Tech I work with</h3>
-            <div class="tech-grid">
-              <div class="tech-item">Kubernetes</div>
-              <div class="tech-item">Docker</div>
-              <div class="tech-item">Terraform</div>
-              <div class="tech-item">AWS</div>
-              <div class="tech-item">CI/CD</div>
-              <div class="tech-item">GitHub Actions</div>
-              <div class="tech-item">Ansible</div>
-              <div class="tech-item">Linux</div>
-              <div class="tech-item">Python</div>
-              <div class="tech-item">Go</div>
-              <div class="tech-item">Prometheus</div>
-              <div class="tech-item">Grafana</div>
+            <div class="tech-grid" data-bind-template="techStack">
             </div>
+          </div>
+          <div class="about-card-section" id="locationSection" style="margin-top: 24px;">
+            <h3>Location</h3>
+            <p class="about-meta" data-bind="personal.location" style="color: var(--text-muted); font-size: 0.9rem;">📍 Amsterdam, North Holland, Netherlands</p>
+          </div>
+          <div class="about-card-section" style="margin-top: 16px;">
+            <h3>Education</h3>
+            <div data-bind-template="education" style="color: var(--text-muted); font-size: 0.9rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="experience">
+    <div class="section-container">
+      <h2 class="section-title">
+        <span class="section-number">02.</span>
+        Experience & Certifications
+      </h2>
+      <div class="exp-grid">
+        <div class="exp-column">
+          <h3 class="exp-subtitle">Work</h3>
+          <div data-bind-template="experience">
+          </div>
+        </div>
+        <div class="exp-column">
+          <h3 class="exp-subtitle">Certifications</h3>
+          <div data-bind-template="certifications">
           </div>
         </div>
       </div>
@@ -135,40 +124,10 @@
   <section id="interests" class="interests">
     <div class="section-container">
       <h2 class="section-title">
-        <span class="section-number">02.</span>
+        <span class="section-number">03.</span>
         Interests
       </h2>
-      <div class="interests-grid">
-        <div class="interest-card">
-          <div class="interest-icon">☁️</div>
-          <h3>Cloud &amp; Infrastructure</h3>
-          <p>Designing scalable, cost-effective cloud architectures. Multi-cloud strategies and edge computing fascinate me.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon">🤖</div>
-          <h3>Automation</h3>
-          <p>If I do it twice, I script it. GitOps, ChatOps, self-healing systems — automating everything is my superpower.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon">🔒</div>
-          <h3>Security &amp; SRE</h3>
-          <p>Building secure-by-default systems. Observability, incident response, and blameless postmortems.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon">🌍</div>
-          <h3>Travel &amp; Outdoors</h3>
-          <p>Hiking mountain trails, exploring new cities, and finding the best local food spots wherever I go.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon">🎵</div>
-          <h3>Music</h3>
-          <p>From classic rock to lo-fi beats for coding sessions. Always building the perfect playlist.</p>
-        </div>
-        <div class="interest-card">
-          <div class="interest-icon">📚</div>
-          <h3>Continuous Learning</h3>
-          <p>Currently diving deeper into Rust, distributed systems, and platform engineering patterns.</p>
-        </div>
+      <div class="interests-grid" data-bind-template="interests">
       </div>
     </div>
   </section>
@@ -176,35 +135,24 @@
   <section id="contact" class="contact">
     <div class="section-container">
       <h2 class="section-title">
-        <span class="section-number">03.</span>
+        <span class="section-number">04.</span>
         Get in Touch
       </h2>
       <div class="contact-content">
-        <p>
+        <p data-bind="contact.message">
           I'm always open to interesting conversations, collaboration opportunities,
           or just geeking out about infrastructure. Feel free to reach out.
         </p>
-        <div class="contact-links">
-          <a href="mailto:guido@dilauro.dev" class="contact-link">
-            <span class="contact-link-icon">✉️</span>
-            guido@dilauro.dev
-          </a>
-          <a href="https://github.com/guidodila" target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-link-icon">🐙</span>
-            GitHub
-          </a>
-          <a href="https://linkedin.com/in/guidodilauro" target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-link-icon">💼</span>
-            LinkedIn
-          </a>
+        <div class="contact-links" data-bind-template="contactLinks">
         </div>
       </div>
     </div>
     <footer class="footer">
-      <p>Built with ❤️ &nbsp;—&nbsp; Guido Di Lauro &copy; 2025</p>
+      <p data-bind="footer.text">Built with ❤️  —  Guido Di Lauro &copy; 2025</p>
     </footer>
   </section>
 
+  <script src="js/snake.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

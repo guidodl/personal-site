@@ -1,0 +1,110 @@
+{
+  "personal": {
+    "firstName": "Guido",
+    "lastName": "Di Lauro",
+    "navLogo": "Guido",
+    "role": "DevOps Engineer",
+    "tagline": "I build resilient infrastructure, automate everything in sight, and keep systems running while I sleep.",
+    "location": "Amsterdam, North Holland, Netherlands",
+    "email": "guidodl96@gmail.com"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "terminalCommands": [
+      { "command": "whoami", "output": "devops engineer" },
+      { "command": "uptime", "output": "always online" },
+      { "command": "cat /etc/motd", "output": "Let's build something reliable" }
+    ]
+  },
+  "about": {
+    "bio": [
+      "I'm a <strong>DevOps Engineer</strong> passionate about bridging the gap between development and operations. My world revolves around <span class=\"highlight\">cloud infrastructure</span>, <span class=\"highlight\">CI/CD pipelines</span>, and making deployments boring (the good kind).",
+      "I believe infrastructure should be <strong>declarative, reproducible, and invisible</strong> — it should just work. I spend my days wrangling Kubernetes clusters, designing resilient architectures, and automating away the tedious stuff so teams can focus on shipping value.",
+      "When I'm not in a terminal, you'll find me experimenting with new tech, contributing to open source, exploring the outdoors, or hunting down the perfect espresso."
+    ],
+    "stats": [
+      { "number": "10+", "label": "Years in Tech" },
+      { "number": "∞", "label": "Automation" },
+      { "number": "24/7", "label": "Reliability" }
+    ]
+  },
+  "techStack": [
+    "Kubernetes", "Docker", "Terraform", "AWS",
+    "CI/CD", "GitHub Actions", "Ansible", "Linux",
+    "Python", "Go", "Prometheus", "Grafana"
+  ],
+  "experience": [
+    {
+      "company": "Adevinta",
+      "role": "DevOps Engineer",
+      "period": "Present",
+      "location": "Amsterdam, Netherlands",
+      "highlights": [
+        "Cloud infrastructure and platform engineering",
+        "CI/CD pipelines and developer workflows",
+        "Kubernetes (EKS) and container orchestration",
+        "AI-native infrastructure and automation"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Università degli Studi di Milano",
+      "location": "Milan, Italy"
+    }
+  ],
+  "certifications": [
+    { "name": "Claude Code 101", "issuer": "Anthropic" },
+    { "name": "Google IT Automation with Python", "issuer": "Google/Coursera" },
+    { "name": "Elastic Kubernetes Service (EKS)", "issuer": "AWS" },
+    { "name": "Google Cloud DevOps Engineer", "issuer": "Google Cloud" }
+  ],
+  "interests": [
+    {
+      "icon": "☁️",
+      "title": "Cloud & Infrastructure",
+      "description": "Designing scalable, cost-effective cloud architectures. Multi-cloud strategies and edge computing fascinate me."
+    },
+    {
+      "icon": "🤖",
+      "title": "Automation",
+      "description": "If I do it twice, I script it. GitOps, ChatOps, self-healing systems — automating everything is my superpower."
+    },
+    {
+      "icon": "🔒",
+      "title": "Security & SRE",
+      "description": "Building secure-by-default systems. Observability, incident response, and blameless postmortems."
+    },
+    {
+      "icon": "🌍",
+      "title": "Travel & Outdoors",
+      "description": "Hiking mountain trails, exploring new cities, and finding the best local food spots wherever I go."
+    },
+    {
+      "icon": "🎵",
+      "title": "Music",
+      "description": "From classic rock to lo-fi beats for coding sessions. Always building the perfect playlist."
+    },
+    {
+      "icon": "📚",
+      "title": "Continuous Learning",
+      "description": "Currently diving deeper into Rust, distributed systems, and platform engineering patterns."
+    }
+  ],
+  "contact": {
+    "message": "I'm always open to interesting conversations, collaboration opportunities, or just geeking out about infrastructure. Feel free to reach out.",
+    "links": [
+      { "icon": "✉️", "label": "guidodl96@gmail.com", "url": "mailto:guidodl96@gmail.com" },
+      { "icon": "🐙", "label": "GitHub", "url": "https://github.com/guidodl" },
+      { "icon": "💼", "label": "LinkedIn", "url": "https://www.linkedin.com/in/guido-di-lauro" }
+    ]
+  },
+  "social": {
+    "github": "https://github.com/guidodl",
+    "linkedin": "https://www.linkedin.com/in/guido-di-lauro"
+  },
+  "footer": {
+    "text": "Built with ❤️  —  Guido Di Lauro",
+    "year": 2026
+  }
+}
