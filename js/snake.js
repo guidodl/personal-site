@@ -1,7 +1,7 @@
 class SnakeGame {
   constructor(container) {
     this.container = container;
-    this.gridSize = 16;
+    this.gridSize = 24;
     this.cols = 0;
     this.rows = 0;
     this.snake = { x: 0, y: 0, dx: 1, dy: 0, cells: [], maxCells: 4 };
@@ -9,7 +9,8 @@ class SnakeGame {
     this.score = 0;
     this.highScore = parseInt(localStorage.getItem('snakeHighScore') || '0');
     this.count = 0;
-    this.speed = 6;
+    this.speed = 4;
+    this.foods = ['🍕', '🍔', '🍝', '🍣', '🌮', '🍩', '🧁', '🍪', '🍉', '🍒', '🥑', '🧀'];
     this.particles = [];
     this.running = true;
     this.paused = false;
@@ -44,6 +45,7 @@ class SnakeGame {
       maxCells: 4
     };
     this.score = 0;
+    this.foodIndex = 0;
     this.particles = [];
     this.spawnApple();
     this.running = true;
@@ -51,6 +53,7 @@ class SnakeGame {
   }
 
   spawnApple() {
+    this.foodIndex = Math.floor(Math.random() * this.foods.length);
     this.apple.x = Math.floor(Math.random() * this.cols) * this.gridSize;
     this.apple.y = Math.floor(Math.random() * this.rows) * this.gridSize;
   }
@@ -193,17 +196,20 @@ class SnakeGame {
     }
     ctx.globalAlpha = 1;
 
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = '#ff5252';
-    ctx.fillStyle = '#ff5252';
-    ctx.fillRect(this.apple.x + 2, this.apple.y + 2, this.gridSize - 4, this.gridSize - 4);
-    ctx.shadowBlur = 0;
+    ctx.font = Math.floor(this.gridSize * 0.9) + 'px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(
+      this.foods[this.foodIndex],
+      this.apple.x + this.gridSize / 2,
+      this.apple.y + this.gridSize / 2
+    );
 
     s.cells.forEach((cell, i) => {
       if (cell.x === this.apple.x && cell.y === this.apple.y) {
         s.maxCells++;
         this.score += 10;
-        this.speed = Math.min(15, 6 + Math.floor(this.score / 50));
+        this.speed = Math.min(12, 4 + Math.floor(this.score / 80));
         this.spawnParticles(cell.x, cell.y);
         this.spawnApple();
       }
