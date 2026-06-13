@@ -97,7 +97,7 @@ let snakeGame = null;
 
 function initTerminal(container) {
   const inputLine = document.createElement("p");
-  inputLine.innerHTML = '<span class="prompt">❯</span> <span class="terminal-input" contenteditable="true"></span><span class="cursor">█</span>';
+  inputLine.innerHTML = '<span class="prompt">❯</span> <span class="terminal-input" contenteditable="true"></span>';
   container.appendChild(inputLine);
 
   const inputEl = inputLine.querySelector(".terminal-input");
