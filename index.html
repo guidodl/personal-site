@@ -3,35 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Guido Di Lauro — DevOps Engineer. Personal website." />
+  <meta name="description" content="Guido Di Lauro — DevOps Engineer based in Amsterdam. Cloud infrastructure, CI/CD, Kubernetes, automation." />
+  <meta name="author" content="Guido Di Lauro" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <link rel="canonical" href="https://guidodilauro.com/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://guidodilauro.com/" />
+  <meta property="og:title" content="Guido Di Lauro — DevOps Engineer" />
+  <meta property="og:description" content="Cloud infrastructure, CI/CD, Kubernetes, automation. Based in Amsterdam." />
+  <meta property="og:site_name" content="Guido Di Lauro" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Guido Di Lauro — DevOps Engineer" />
+  <meta name="twitter:description" content="Cloud infrastructure, CI/CD, Kubernetes, automation. Based in Amsterdam." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Guido Di Lauro",
+    "jobTitle": "DevOps Engineer",
+    "url": "https://guidodilauro.com/",
+    "email": "mailto:guidodl96@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Amsterdam",
+      "addressRegion": "North Holland",
+      "addressCountry": "Netherlands"
+    },
+    "sameAs": [
+      "https://github.com/guidodl",
+      "https://www.linkedin.com/in/guido-di-lauro"
+    ]
+  }
+  </script>
+
   <title id="pageTitle">Guido Di Lauro</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+
+  <script>
+    (function () {
+      var k = "theme";
+      var s = localStorage.getItem(k);
+      var t = s || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
 </head>
 <body>
-  <div class="bg-glow bg-glow-1"></div>
-  <div class="bg-glow bg-glow-2"></div>
-  <div class="bg-glow bg-glow-3"></div>
+  <a href="#main" class="skip-link">Skip to content</a>
 
-  <nav class="nav">
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-3" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Primary">
     <div class="nav-inner">
-
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#interests">Interests</a>
         <a href="#contact">Contact</a>
       </div>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme">
         <span class="theme-icon-light">☀️</span>
         <span class="theme-icon-dark">🌙</span>
       </button>
     </div>
   </nav>
 
+  <main id="main">
   <section id="hero" class="hero">
     <div class="hero-content">
       <div class="hero-text">
@@ -42,8 +90,7 @@
         </h1>
         <p class="hero-role" data-bind="personal.role">DevOps Engineer</p>
         <p class="hero-tagline" data-bind="personal.tagline">
-          I build resilient infrastructure, automate everything in sight,<br />
-          and keep systems running while I sleep.
+          I build resilient infrastructure, automate everything in sight, and keep systems running while I sleep.
         </p>
         <div class="hero-actions">
           <a href="#about" class="btn btn-primary">About me</a>
@@ -51,41 +98,38 @@
         </div>
       </div>
       <div class="hero-visual">
-        <div class="hero-terminal">
+        <div class="hero-terminal" role="img" aria-label="Interactive terminal — type help, whoami, snake, or clear">
           <div class="terminal-bar">
             <span class="terminal-dot dot-red"></span>
             <span class="terminal-dot dot-yellow"></span>
             <span class="terminal-dot dot-green"></span>
             <span class="terminal-title" data-bind-template="terminalTitle"></span>
           </div>
-          <div class="terminal-body" data-bind-template="terminalBody">
-          </div>
+          <div class="terminal-body" data-bind-template="terminalBody"></div>
         </div>
       </div>
     </div>
-    <div class="scroll-indicator">
+    <div class="scroll-indicator" aria-hidden="true">
       <span class="scroll-text">Scroll</span>
       <span class="scroll-line"></span>
     </div>
   </section>
 
-  <section id="about" class="about">
+  <section id="about" class="about" aria-labelledby="about-title">
     <div class="section-container">
-      <h2 class="section-title">
+      <h2 class="section-title" id="about-title">
         <span class="section-number">01.</span>
         About Me
       </h2>
       <div class="about-grid">
         <div class="about-text">
           <div data-bind-template="aboutBio"></div>
-          <div class="about-stats" data-bind-template="aboutStats">
-          </div>
+          <div class="about-stats" data-bind-template="aboutStats"></div>
         </div>
         <div class="about-card">
           <div class="tech-stack">
             <h3>Tech I work with</h3>
-            <div class="tech-grid" data-bind-template="techStack">
-            </div>
+            <div class="tech-grid" data-bind-template="techStack"></div>
           </div>
           <div class="about-card-section" id="locationSection" style="margin-top: 24px;">
             <h3>Location</h3>
@@ -100,41 +144,38 @@
     </div>
   </section>
 
-  <section id="experience" class="experience">
+  <section id="experience" class="experience" aria-labelledby="experience-title">
     <div class="section-container">
-      <h2 class="section-title">
+      <h2 class="section-title" id="experience-title">
         <span class="section-number">02.</span>
-        Experience & Certifications
+        Experience &amp; Certifications
       </h2>
       <div class="exp-grid">
         <div class="exp-column">
           <h3 class="exp-subtitle">Work</h3>
-          <div data-bind-template="experience">
-          </div>
+          <div data-bind-template="experience"></div>
         </div>
         <div class="exp-column">
           <h3 class="exp-subtitle">Certifications</h3>
-          <div data-bind-template="certifications">
-          </div>
+          <div data-bind-template="certifications"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="interests" class="interests">
+  <section id="interests" class="interests" aria-labelledby="interests-title">
     <div class="section-container">
-      <h2 class="section-title">
+      <h2 class="section-title" id="interests-title">
         <span class="section-number">03.</span>
         Interests
       </h2>
-      <div class="interests-grid" data-bind-template="interests">
-      </div>
+      <div class="interests-grid" data-bind-template="interests"></div>
     </div>
   </section>
 
-  <section id="contact" class="contact">
+  <section id="contact" class="contact" aria-labelledby="contact-title">
     <div class="section-container">
-      <h2 class="section-title">
+      <h2 class="section-title" id="contact-title">
         <span class="section-number">04.</span>
         Get in Touch
       </h2>
@@ -143,16 +184,15 @@
           I'm always open to interesting conversations, collaboration opportunities,
           or just geeking out about infrastructure. Feel free to reach out.
         </p>
-        <div class="contact-links" data-bind-template="contactLinks">
-        </div>
+        <div class="contact-links" data-bind-template="contactLinks"></div>
       </div>
     </div>
     <footer class="footer">
-      <p data-bind="footer.text">Built with ❤️  —  Guido Di Lauro &copy; 2025</p>
+      <p data-bind-template="footerText">Built with ❤️ — Guido Di Lauro © 2026</p>
     </footer>
   </section>
+  </main>
 
-  <script src="js/snake.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Guido Di Lauro</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <script>
+    (function () {
+      var s = localStorage.getItem("theme");
+      var t = s || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-3" aria-hidden="true"></div>
+  <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;z-index:1;">
+    <div>
+      <p style="font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:8px;">❯ cd /</p>
+      <h1 style="font-size:clamp(3rem,12vw,6rem);font-weight:800;margin-bottom:16px;">404</h1>
+      <p style="color:var(--text-muted);margin-bottom:32px;font-size:1.1rem;">This page doesn't exist in the cluster.</p>
+      <a href="/" class="btn btn-primary">← Back home</a>
+    </div>
+  </main>
+</body>
+</html>
