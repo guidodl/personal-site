@@ -2,8 +2,11 @@ class SnakeGame {
   constructor(container) {
     this.container = container;
     this.gridSize = 24;
+    this.hudHeight = 32;
     this.cols = 0;
     this.rows = 0;
+    this.playableRows = 0;
+    this.topOffset = 0;
     this.snake = { x: 0, y: 0, dx: 1, dy: 0, cells: [], maxCells: 4 };
     this.apple = { x: 0, y: 0 };
     this.score = 0;
@@ -17,6 +20,9 @@ class SnakeGame {
     this.lastKeyTime = 0;
 
     this.canvas = document.createElement('canvas');
+    this.canvas.style.maxWidth = '100vw';
+    this.canvas.style.maxHeight = '100vh';
+    this.canvas.style.touchAction = 'none';
     this.ctx = this.canvas.getContext('2d');
     this.container.appendChild(this.canvas);
 
@@ -26,19 +32,44 @@ class SnakeGame {
     this.loop();
   }
 
+  viewportSize() {
+    const vv = window.visualViewport;
+    if (vv) return { w: Math.floor(vv.width), h: Math.floor(vv.height) };
+    return { w: document.documentElement.clientWidth, h: document.documentElement.clientHeight };
+  }
+
   resize() {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    this.cols = Math.floor(w / this.gridSize);
-    this.rows = Math.floor(h / this.gridSize);
+    const { w, h } = this.viewportSize();
+    this.cols = Math.max(8, Math.floor(w / this.gridSize));
+    this.rows = Math.max(8, Math.floor(h / this.gridSize));
     this.canvas.width = this.cols * this.gridSize;
     this.canvas.height = this.rows * this.gridSize;
+
+    const hudRows = Math.ceil(this.hudHeight / this.gridSize);
+    this.topOffset = hudRows * this.gridSize;
+    this.playableRows = this.rows - hudRows;
+    if (this.playableRows < 4) this.playableRows = this.rows;
+
+    if (this.snake) {
+      this.snake.x = this.clamp(this.snake.x, 0, (this.cols - 1) * this.gridSize, this.gridSize);
+      this.snake.y = this.clamp(this.snake.y, this.topOffset, (this.rows - 1) * this.gridSize, this.gridSize);
+    }
+    if (this.apple && (this.apple.y < this.topOffset || this.apple.x >= this.cols * this.gridSize)) {
+      this.spawnApple();
+    }
+  }
+
+  clamp(v, min, max, step) {
+    if (v < min) return min;
+    if (v > max) return max;
+    return v;
   }
 
   initGame() {
+    const startY = (this.topOffset + this.rows * this.gridSize) / 2;
     this.snake = {
       x: Math.floor(this.cols / 2) * this.gridSize,
-      y: Math.floor(this.rows / 2) * this.gridSize,
+      y: Math.floor(startY / this.gridSize) * this.gridSize,
       dx: this.gridSize,
       dy: 0,
       cells: [],
@@ -54,8 +85,16 @@ class SnakeGame {
 
   spawnApple() {
     this.foodIndex = Math.floor(Math.random() * this.foods.length);
-    this.apple.x = Math.floor(Math.random() * this.cols) * this.gridSize;
-    this.apple.y = Math.floor(Math.random() * this.rows) * this.gridSize;
+    const minCol = 0;
+    const maxCol = this.cols - 1;
+    const minRow = Math.floor(this.topOffset / this.gridSize);
+    const maxRow = this.rows - 1;
+    let attempts = 0;
+    do {
+      this.apple.x = (minCol + Math.floor(Math.random() * (maxCol - minCol + 1))) * this.gridSize;
+      this.apple.y = (minRow + Math.floor(Math.random() * (maxRow - minRow + 1))) * this.gridSize;
+      attempts++;
+    } while (attempts < 20 && this.snake && this.snake.cells.some((c) => c.x === this.apple.x && c.y === this.apple.y));
   }
 
   spawnParticles(x, y) {
@@ -133,6 +172,10 @@ class SnakeGame {
       if (this.paused) { this.paused = false; return; }
       const dx = e.changedTouches[0].pageX - this._tx;
       const dy = e.changedTouches[0].pageY - this._ty;
+      if (Math.abs(dx) < 16 && Math.abs(dy) < 16) {
+        e.preventDefault();
+        return;
+      }
       if (Math.abs(dx) > Math.abs(dy)) {
         if (dx > 0 && this.snake.dx === 0) {
           this.snake.dx = this.gridSize;
@@ -158,6 +201,11 @@ class SnakeGame {
 
     this._resize = () => this.resize();
     window.addEventListener('resize', this._resize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', this._resize);
+    }
+    this._orientation = () => setTimeout(this._resize, 200);
+    window.addEventListener('orientationchange', this._orientation);
   }
 
   loop() {
@@ -173,8 +221,8 @@ class SnakeGame {
 
     if (s.x < 0) s.x = this.canvas.width - this.gridSize;
     else if (s.x >= this.canvas.width) s.x = 0;
-    if (s.y < 0) s.y = this.canvas.height - this.gridSize;
-    else if (s.y >= this.canvas.height) s.y = 0;
+    if (s.y < this.topOffset) s.y = this.canvas.height - this.gridSize;
+    else if (s.y >= this.canvas.height) s.y = this.topOffset;
 
     s.cells.unshift({ x: s.x, y: s.y });
     if (s.cells.length > s.maxCells) s.cells.pop();
@@ -316,6 +364,8 @@ class SnakeGame {
     document.removeEventListener('touchmove', this._touchmove);
     document.removeEventListener('touchend', this._touchend);
     window.removeEventListener('resize', this._resize);
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', this._resize);
+    window.removeEventListener('orientationchange', this._orientation);
     if (this.canvas.parentNode) this.canvas.parentNode.removeChild(this.canvas);
   }
 }
