@@ -80,8 +80,12 @@ class SnakeGame {
         }
         return;
       }
-      if (e.key === 'Escape' || e.key === 'p' || e.key === 'P') {
+      if (e.key === 'p' || e.key === 'P') {
         this.paused = !this.paused;
+        return;
+      }
+      if (e.key === 'q' || e.key === 'Q') {
+        this.running = false;
         return;
       }
       if (this.paused) return;
@@ -263,7 +267,7 @@ class SnakeGame {
 
     ctx.fillStyle = '#8888a0';
     ctx.textAlign = 'right';
-    ctx.fillText('ESC to pause', this.canvas.width - 12, 16);
+    ctx.fillText('p pause · q quit', this.canvas.width - 12, 16);
 
     if (this.paused) {
       ctx.fillStyle = 'rgba(10,10,15,0.6)';
